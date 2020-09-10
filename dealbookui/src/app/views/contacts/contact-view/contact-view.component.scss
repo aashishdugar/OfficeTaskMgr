@@ -1,0 +1,220 @@
+.container-fluid {
+    border-top: 1px solid #ececec;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    border-bottom: 1px solid #00c6c6;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0 5px;
+    font-size: 14px;
+}
+.tab-content {
+    margin-top: -1px;
+    background: #fff;
+    border: 1px solid #fff;
+}
+
+h4,
+.nav-tabs .nav-link.active {
+    color: #00c6c6;
+}
+
+// .nav-tabs .nav-link.active {
+//     /* font-weight: bold; */
+//     /* border-color: #00c6c6 #00c6c6 #fff; */
+// }
+
+.nav-tabs .nav-link {
+    font-size: 15px;
+}
+
+.btn.focus,
+.btn:focus {
+    box-shadow: none;
+}
+
+.submenu {
+    position: absolute;
+    font-size: 14px;
+    color: #000;
+    width: 80px;
+    border: 1px solid #ccc;
+    z-index: 4;
+    background: #fff;
+    padding: 5px 10px;
+    top: 35px;
+    right: 15px;
+    line-height: 21px;
+    border-radius: 10px;
+}
+
+.form-inline {
+    height: 100%;
+}
+
+.submenu>div {
+    cursor: pointer;
+    margin: 0px 0 1px;
+    padding: 2px 5px;
+}
+
+.submenu>div:hover {
+    background: #e0e0e0;
+}
+
+.submenu:after {
+    content: '';
+    width: 1px;
+    height: 1px;
+    border-left: 10px solid #f000;
+    border-right: 10px solid #f000;
+    position: absolute;
+    top: -6px;
+    right: 24%;
+    border-bottom: 5px solid #ccc;
+}
+
+span.btns {
+    font-size: 13px;
+    display: inline-block;
+    text-align: center;
+    margin: 0 5px;
+    min-width: 40px;
+    cursor: pointer;
+    color: #000;
+}
+
+h4 span i,
+.pull-right i {
+    display: inline-block;
+    border: 1px solid #ccc;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 50%;
+    margin: 0 2px;
+}
+
+.profile+div,
+form {
+    clear: both;
+}
+
+.add-activity {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 15px;
+    top: 7px;
+    z-index: 9999;
+}
+
+.add-activity i,
+.activity-btns i {
+    display: inline-block;
+    border: 1px solid #ccc;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 50%;
+    margin: 0;
+}
+
+i {
+    text-align: center;
+    cursor: pointer;
+}
+span.btns{
+    font-size: 13px;
+    display: inline-block;
+    text-align: center;
+    margin: -4px 4px;
+    min-width: 40px;
+    cursor: pointer;
+    color: #000;
+}
+.table td,
+.table th {
+    padding: 4px 60px 4px 4px;
+    position: relative;
+}
+
+.table td>.btns-right {
+    position: absolute;
+    right: 0;
+    top: 1px;
+}
+
+.activity-form span i {
+    margin: 2px;
+    font-size: 1rem;
+    line-height: 22px;
+}
+
+
+/*   For Form */
+
+.container-fluid>p {
+    background: #037777;
+    color: #fff;
+    cursor: move;
+    font-weight: bold;
+}
+
+.container-fluid {
+    position: relative;
+    padding: 0;
+}
+
+.closebtn {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.btn {
+    padding: 0 0.6em;
+}
+
+hr {
+    margin: 0 0 10px;
+}
+
+p {
+    margin: 0;
+}
+
+.profile {
+    padding: 10px 05px 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.submenu {
+    display: none;
+}
+
+.openactivities:hover+.submenu,
+.submenu:hover {
+    display: block;
+}
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+
+.add-activity[_ngcontent-msw-c134] {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 15px;
+    top: 3px;
+    z-index: 9999;
+}

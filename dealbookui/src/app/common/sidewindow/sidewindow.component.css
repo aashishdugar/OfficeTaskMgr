@@ -1,0 +1,126 @@
+.side-window {
+    position: fixed;
+    right: 0;
+    bottom: 04%;
+    min-width: 230px;
+    /* min-height: 350px; */
+    overflow: hidden;
+    margin: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    z-index: 999999;
+    max-width: 80%;
+    left: 50px;
+    top: 0;
+    margin: auto;
+    /* text-align: center; */
+    height: 500px;
+}
+
+.container-fluid>p {
+    background: #037777;
+    color: #fff;
+    /* cursor: move; */
+    font-weight: bold;
+    padding: 4px 0;
+    text-indent: 13px;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    font-size: 1rem;
+}
+
+.container-fluid {
+    position: relative;
+    padding: 32px 0 0 0;
+    height: 100%;
+}
+
+.dragElement {
+    display: block;
+    position: absolute;
+    width: calc(100% - 70px);
+    top: 0;
+    height: 30px;
+    opacity: 0;
+}
+
+.closebtn {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.fa-window-minimize {
+    vertical-align: top;
+}
+
+.closebtn .fa {
+    margin: 0 5px;
+}
+
+.btn {
+    padding: 0 0.6em;
+}
+
+hr {
+    margin: 10px;
+}
+
+textarea {
+    max-height: 200px;
+    min-height: 80px;
+}
+
+.p-3 {
+    height: 100%;
+    overflow: hidden;
+}
+
+.hierarchycomponent .p-3 {
+    padding: 0 !important;
+}
+
+.p-3>div {
+    height: 100%;
+}
+
+.m-0 {
+    cursor: move;
+}
+
+.some-parent-class {
+    resize: both;
+    overflow: auto;
+    padding-bottom: 20px;
+    width: 600px;
+    border: 2px solid #037777;
+}
+
+.hierarchycomponent {
+    min-width: 35%!important;
+    max-height: 90%!important;
+    max-width: 90%!important;
+    min-height: 40%;
+    width: 75%;
+    font-size: 0.7rem !important;
+}
+
+.min-window {
+    transform: translateX(-20px);
+    width: 307px;
+    height: 36px;
+    min-height: 36px;
+    min-width: 40px !important;
+    resize: none;
+    overflow: hidden;
+    right: 0;
+    bottom: 0;
+    margin: unset;
+    left: unset;
+    top: unset;
+}

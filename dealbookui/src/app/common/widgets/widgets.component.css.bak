@@ -1,0 +1,29 @@
+.table-title {
+    font-size: 20px;
+    text-indent: 20px;
+    padding-top: 10px;
+    padding-right: 15px;
+}
+
+th,
+td {
+    max-width: 95px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.table-title i {
+    margin: 0 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.table-title .fa:before {
+    margin-left: -25px;
+}
+
+.norecords {
+    padding: 10px 15px;
+    font-size: 1rem;
+}

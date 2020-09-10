@@ -1,0 +1,56 @@
+<div class='sidebar' [class.nav-open]='!isMenuExpand'>
+    <div class="navbar sidebar-container">
+        <nav class="navbar navbar-light bg-white p-0 mt-2">
+            <ul class="navbar-nav h6" appHidesubmenu (clickOutside)="clickOutside()">
+                <li class="nav-item dropdown px-2 mb-2" [class.active]="submenuShowHide.dashboard">
+                    <a class="nav-link" routerLink="dashboard" (click)="showSubmenu('dashboard')" id="navbardrop" data-toggle="dropdown">
+                        <i class="fa fa-tachometer" aria-hidden="true" title="Dashboard"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown px-2 mb-2" [class.active]="submenuShowHide.contacts">
+                    <a class="nav-link" (click)="showSubmenu('contacts')" routerLink="contacts" id="navbardrop" data-toggle="dropdown">
+                        <i class="fa fa-address-book-o" aria-hidden="true" title="Contacts"></i> <span>Contacts</span>
+                    </a>
+                    <div class="dropdown-menu bg-color mb-2" (click)="clickOutside()" [class.show]="submenuShowHide.contacts">
+                        <a class="dropdown-item" routerLink="contacts">Contacts</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown px-2 mb-2" [class.active]="submenuShowHide.deals">
+                    <a class="nav-link" id="navbardrop" routerLink='contacts/activites' (click)="showSubmenu('deals')" data-toggle="dropdown">
+                        <i class="fa fa-handshake-o" aria-hidden="true" title="Deals"></i> <span>Deals</span>
+                    </a>
+                    <div class="dropdown-menu bg-color mb-2" (click)="clickOutside()" [class.show]="submenuShowHide.deals">
+                        <a class="dropdown-item" href="#">Deals</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown px-2 mb-2" [class.active]="submenuShowHide.sales">
+                    <a class="nav-link" id="navbardrop" (click)="showSubmenu('sales')" data-toggle="dropdown">
+                        <i class="fa fa-file-o" aria-hidden="true" title="Contracts"></i> <span>Contracts</span>
+                    </a>
+                    <div class="dropdown-menu bg-color mb-2" (click)="clickOutside()" [class.show]="submenuShowHide.sales">
+                        <a class="dropdown-item" href="#">Contracts</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown px-2 mb-2" [class.active]="submenuShowHide.reports">
+                    <a class="nav-link" routerLink="reports" id="navbardrop" (click)="showSubmenu('reports')" data-toggle="dropdown">
+                        <i class="fa fa-users" aria-hidden="true" title="Consultants"></i> <span>Consultants</span>
+                    </a>
+                    <div class="dropdown-menu bg-color mb-2" (click)="clickOutside()" [class.show]="submenuShowHide.reports">
+                        <a class="dropdown-item" routerLink="reports">Reports</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown px-2 mb-2" [class.active]="submenuShowHide.commissions">
+                    <a class="nav-link" id="navbardrop" (click)="showSubmenu('commissions')" data-toggle="dropdown">
+                        <i class="fa fa-money" aria-hidden="true" title="Commissions"></i> <span>Commissions</span>
+                        <!-- <i class="fa fa-usd" aria-hidden="true"></i> <span>Commissions</span> -->
+                    </a>
+                    <div class="dropdown-menu bg-color mb-2" (click)="clickOutside()" [class.show]="submenuShowHide.commissions">
+                        <a class="dropdown-item" routerLink="reports">Reports</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

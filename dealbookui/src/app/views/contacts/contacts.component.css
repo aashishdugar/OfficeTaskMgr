@@ -1,0 +1,166 @@
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -28px;
+    margin-left: -2px;
+    height: 3em;
+    background-color: #fff;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
+
+
+.rows:not(.head):nth-child(even),
+.rows:not(.head):hover {
+    background-color: #f9f9f9;
+
+}
+
+/* .rows:not(.head):hover {
+    background-color: #f9f9f9;
+    text-decoration: none;
+    font-weight: bold;
+} */
+.top-menu-heading {
+    display: inline-block;
+    padding: 5px;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.h5 {
+    margin: 0;
+    padding: 0;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 1.9rem;
+    line-height: 1.9rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.form-control {
+    border: 0 solid transparent;
+    /* border-bottom: 1px solid #d3efef; */
+    /* border-radius: 0; */
+}
+
+.has-search {
+    position: relative;
+    margin-right: 25px;
+}
+
+.column-settings {
+    position: absolute;
+    right: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.columns:not(.active) .sort-icon {
+    color: #426e6e;
+}
+
+section {
+    overflow: auto;
+    height: calc(100vh - 160px);
+    width: calc(100% + 12px);
+}
+
+.form-inline {
+    justify-content: flex-end;
+}
+
+.count {
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+.rows:not(.head):nth-child(even),
+.rows:not(.head):hover {
+    background-color: #f9f9f9;
+}
+
+.top-menu-heading {
+    display: inline-block;
+    padding: 5px;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.h5 {
+    margin: 0;
+    padding: 0;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 1.9rem;
+    line-height: 1.9rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.form-control {
+    border: 0 solid transparent;
+    /* border-bottom: 1px solid #d3efef; */
+    /* border-radius: 0; */
+}
+
+.has-search {
+    position: relative;
+    margin-right: 25px;
+}
+
+.column-settings {
+    position: absolute;
+    right: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.columns:not(.active) .sort-icon {
+    color: #b5b5b5;
+}
+
+section {
+    overflow: auto;
+    height: calc(100vh - 160px);
+    width: calc(100% + 12px);
+}
+
+.form-inline {
+    justify-content: flex-end;
+}
+
+.count {
+    font-weight: bold;
+}

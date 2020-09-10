@@ -1,0 +1,22 @@
+<!-- <app-header (menuExpand)="menuExpand($event)"></app-header>
+<div class="main-container">
+    <app-nav-menu [isMenuExpand]='isMenuExpand' [curPath]='curPath'></app-nav-menu>
+    <app-main></app-main>
+</div> -->
+<!-- {{time | datePipe | date:'mediumDate' }} -->
+<!-- <app-footer></app-footer> -->
+<app-header (menuExpand)="menuExpand($event)" *ngIf="router.url !== '/sign-in' && router.url !== '/forgot' && router.url !== '/reset'"></app-header>
+<div class="main-container">
+    <app-nav-menu [isMenuExpand]='isMenuExpand' [curPath]='curPath' *ngIf="router.url !== '/sign-in' && router.url !== '/forgot' && router.url !== '/reset'"></app-nav-menu>
+    <div class="main-panel ps ps--active-y pl-2" style="scrollbar-width: thin;">
+        <div class="container-fluid">
+        
+            <app-spinner></app-spinner>
+            <app-hierarchy-modal></app-hierarchy-modal>
+            <router-outlet></router-outlet>
+ 
+        </div>
+    </div>
+    <app-sidewindow *ngIf="isShowComp" (closeWindow)='closeWindow()' ></app-sidewindow>
+</div>
+<app-footer *ngIf="router.url !== '/sign-in' && router.url !== '/forgot' && router.url !== '/reset'"></app-footer >

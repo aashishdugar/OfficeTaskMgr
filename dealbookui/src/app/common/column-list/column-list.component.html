@@ -1,0 +1,24 @@
+<!-- <form [formGroup]="form" (ngSubmit)="submit()">
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let order of form.controls.orders.controls; let i = index" cdkDrag>
+            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <label formArrayName="orders">
+                <input type="checkbox" [formControlName]="i" (change)="changeColumn($event)">
+                {{ordersData[i].column}}
+            </label>
+        </div>
+    </div>
+    <!- <button [disabled]="!form.valid">submit</button> ->
+</form> -->
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let order of ordersData; let i = index" cdkDrag>
+            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <label formArrayName="orders">
+                <input type="checkbox" [formControlName]="i" (change)="changeColumn($event)">
+                {{ordersData[i].column}}
+            </label>
+        </div>
+    </div>
+</form>

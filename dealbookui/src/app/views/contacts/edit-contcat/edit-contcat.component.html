@@ -1,0 +1,234 @@
+<div>
+    <div class="">
+        <!--container-fluid  -->
+        <div class="row" [class.edit]='title == "Edit Contact"'>
+            <!-- box -->
+            <div class="col-md-12">
+                <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="card-header">
+                <h5 class="mr-2 " style="line-height: 0.2;font-size: 13px;font-weight: bold;">{{title}} <span class="pull-right h6"><i *ngIf='!contactsList.controls.length' ></i></span></h5>
+                </div>
+                <div class="card-body">
+                <form [formGroup]="editcontactForm"  *ngIf='contactsList.controls.length'>
+                    <div class="row" formArrayName="newContacts">
+                        <div class="col-md-12 form-inline mt-2" [formGroupName]="i" *ngFor="let contact of contactsList.controls; let i = index; let first=first; let last = last;">
+                           
+                            <div class="col-md-7">
+                                <!-- <h5 style="margin-left: -1em;text-decoration: underline;">Personal Details</h5> -->
+                                <div>
+                                    <label *ngIf="null != error && error != ''" style="color: red; font-size: 13px; margin-left: 1em;">{{error}}</label>
+                                </div>
+                                <div class="row">
+                                    <!-- <div class="form-group min-width">
+                                        <label [for]="'salutation'+i" [class.hasValue]="true">Salautation</label>
+                                      
+                                        <select [(ngModel)]="salutation"  class="form-control" formControlName="salutation">
+                                                <option value="">Select Salutation</option>
+                                                <option [value]="salutation.name" *ngFor="let salutation of this.utils.salutationList">{{salutation.name}}</option>
+                                        </select>
+                            
+    
+                                    </div>    -->
+                              
+    
+                                <div class="form-group min-width">
+                                    <label [for]="'name'+i" >Name</label>
+                                    <input [id]="'name'+i" [(ngModel)]="name"  type="text" class="form-control" formControlName="name" />
+                                    <div class="invalid-feedback">
+                                        <div>First Name is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group min-width">
+                                    <label [for]="'email'+i" >Email</label>
+                                    <input [id]="'email'+i" [(ngModel)]="email"   type="text" class="form-control" formControlName="email" email />
+                                </div>
+                                <div class="form-group min-width">
+                                    <label [for]="'phone'+i" [class.hasValue]="contact.value.mobile">Contact Number</label>
+                                    <input [id]="'phone'+i" [(ngModel)]="phone"  type="text" class="form-control" formControlName="phone" />
+                                </div>
+                                <div class="form-group min-width" >
+                                    <label [for]="'title'+i" >Designation</label>
+                                    <input type="text" [id]="'title'+i" [(ngModel)]="designation"   class="form-control" formControlName="designation" />
+                                </div>
+                                </div>
+                                <div class="row">
+                                    <!-- <div class="form-group min-width contacttype" [formGroup]="contact.get('contacttype')">
+                                        <label [for]="'contacttype'+i" [class.hasValue]="true">Contact Type</label>
+                                        <select [id]="'contacttype'+i" [(ngModel)]="contacttype"   class="form-control" formControlName="id">
+                                                <option value="" selected>Contact Type</option>
+                                                <ng-container  *ngFor="let contacttype of this.utils.contactTypeList">
+                                                    <option *ngIf="checkSameContact(editObject, contacttype.id)" [ngValue]="contacttype.id" >{{contacttype.name}}</option>
+                                                </ng-container>
+                                            </select>
+                                    </div>  -->
+        
+                                    <!-- <div class="form-group min-width role" [formGroup]="contact.get('role')">
+                                        <label [for]="'role'+i" >Role</label>
+                                        <select [id]="'role'+i" [(ngModel)]="role"  class="form-control" formControlName="id">
+                                                <option value="" selected>Select Role</option>
+                                                <ng-container  *ngFor="let role of this.utils.roleList">
+                                                    <option *ngIf="checkSameContact(editObject, role.id)" [ngValue]="role.id" >{{role.name}}</option>
+                                                </ng-container>
+                                            </select>
+                                    </div> -->
+                                    
+                                    
+                                    <div class="form-group min-width">
+                                        <label [for]="'company'+i" >Company</label>
+                                        <select [id]="'company'+i"  [(ngModel)]="company"  (change)="changecompany($event.target.value)" class="form-control" formControlName="company">
+                                                <option value="">Select company</option>
+                                                <option [value]="item.id" *ngFor="let item of companyList">{{item.name}}</option>
+                                            </select>
+                                    </div>
+
+                                    <div class="form-group min-width reportto" [formGroup]="contact.get('reportto')">
+                                        <label [for]="reportto" [class.hasValue]="true">Report To</label>
+                                  
+                                        <input type="text" id="reportto" [(ngModel)]="reportstoname" class="form-control" formControlName="name" autocomplete="off" (focus)="toggleShow(1)" (blur)="toggleShow(0)" (input)="filterRows($event.target.value)">
+                                        <div class="reporttolist" *ngIf="contact.get('company').value !== '' && isReportToList">
+                                            <ul>
+                                                <ng-container *ngFor="let emp of reporttolist | textSearchFilter:'name':true:searchText;">
+                                                    <li *ngIf="checkSameContact(editObject, emp.id)" (click)="selectedName(i, emp)">{{emp.name}}</li>
+                                                </ng-container>
+                                            </ul>
+                                        </div> 
+                                    </div>
+
+                                    <!-- <div class="form-group min-width reportto" [formGroup]="contact.get('reportto')">
+                                        <label [for]="'reportto'+i">Report To</label>
+                                        <select [id]="'reportingto'+i"  [(ngModel)]="reportsto" class="form-control" formControlName="name">
+                                            <option value="" selected>Select ReportingTo</option>
+                                            <option [value]="report.id" *ngFor="let report of reporttolist">{{report.name}}</option>
+                                        </select>
+                                            
+                                    </div> -->
+        
+          
+        
+                                    <div class="form-group min-width contactowner" [formGroup]="contact.get('contactowner')">
+                                        <label [for]="'contactowner'+i" [class.hasValue]="true">Contact Owner</label>
+                                        <select [id]="'contactowner'+i" [(ngModel)]="contactowner"   class="form-control" formControlName="id">
+                                                <option value="">Select Owner</option>
+                                                <ng-container *ngFor="let owner of contactOwnerList">
+                                                    <option *ngIf="checkSameContact(editObject, owner.id)" [ngValue]="owner.id" >{{owner.name}}</option>
+                                                </ng-container>
+                                            </select>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                            <div class="col-md-5">
+                                <!-- <h5 style="margin-left: -1em;text-decoration: underline;">Address</h5> -->
+                                <div class="row">
+                                    <div class="form-group min-width">
+                                        <label [for]="'line'+i" >Address Line</label>
+                                        <input [id]="'line'+i" [(ngModel)]="line"  type="text" class="form-control" formControlName="line" />
+                                    </div>
+        
+                                    <div class="form-group min-width">
+                                        <label [for]="'country'+i" [class.hasValue]="true">Country</label>
+                                        <select [id]="'country'+i"  [(ngModel)]="slectedCountry"  (change)="getCountryState(i,$event.target.value)" class="form-control" formControlName="country">
+                                                <option value="" selected>Select Country</option>
+                                                <option [value]="country.id" *ngFor="let country of this.utils.countryList">{{country.countryName}}</option>
+                                            </select>
+                                    </div>
+        
+                                    <div class="form-group min-width">
+                                        <label [for]="'state'+i" [class.hasValue]="true">State</label>
+                                        <select [id]="'state'+i" [(ngModel)]="slectedSate"  class="form-control" formControlName="state">
+                                                <option value="">Select State</option>
+                                                <option [value]="state.id"  *ngFor="let state of stateArr">{{state.name}}</option>
+                                            </select>
+                                    </div>
+                                </div>
+
+                                <div col-12 class="row">
+                                    <div col-4 class="form-group ">
+                                        <label [for]="'city'+i" [class.hasValue]="contact.value.city">City</label>
+                                        <input [id]="'city'+i" [(ngModel)]="city"  type="text" class="form-control" formControlName="city" />
+                                    </div>
+        
+                                    <div col-4 class="form-group">
+                                        <input type="checkbox" [id]="'isuser'+i"    class="form-control mr-2" [(ngModel)]="isuser"  (change)="change()" formControlName="isuser" />
+                                        <label [for]="'isuser'+i" class="isuser">Is User</label>
+                                    </div>
+                                    
+                                    <div col-4 class="form-group role" [formGroup]="contact.get('role')" *ngIf="true == isuser">
+                                        <label [for]="'role'+i" >Role</label>
+                                        <select [id]="'role'+i" [(ngModel)]="role"  class="form-control" formControlName="id">
+                                                <option value="" selected>Select Role</option>
+                                                <ng-container  *ngFor="let role of this.utils.roleList">
+                                                    <option *ngIf="checkSameContact(editObject, role.id)" [ngValue]="role.id" >{{role.name}}</option>
+                                                </ng-container>
+                                                <!-- <option [value]="role.id" *ngFor="let role of this.utils.roleList">{{role.name}}</option> -->
+                                            </select>
+                                    </div>
+                                    
+                                    <!-- <div class="form-group min-width">
+                                        <i class="fa fa-minus text-danger" (click)='removeNewContact(i)' aria-hidden="true"></i>
+                                    </div>-->
+                                </div> 
+
+                                <!-- <div class="row">
+                                    <div class="form-group min-width">
+                                        <label [for]="'city'+i" [class.hasValue]="contact.value.city">City</label>
+                                        <input [id]="'city'+i" [(ngModel)]="city"  type="text" class="form-control" formControlName="city" />
+                                    </div>
+        
+                                    <div class="form-group min-width">
+                                        <label [for]="'zipCode'+i" [class.hasValue]="contact.value.zipCode">Pin</label>
+                                        <input [id]="'zipCode'+i" [(ngModel)]="zipCode"   type="text" class="form-control" formControlName="zipCode" />
+                                    </div>
+                                    <div class="form-group mt-3 no-flex">
+                                        <input type="checkbox" [id]="'isuser'+i"    class="form-control mr-2" [(ngModel)]="isuser"  (change)="change()" formControlName="isuser" />
+                                        <label [for]="'isuser'+i" class="isuser">Is User</label>
+                                    </div>
+                                    <div class="form-group mt-3 ml-2 text-right no-flex" *ngIf="title != 'Edit Contact'">
+                                        <i class="fa fa-minus text-danger" (click)='removeNewContact(i)' aria-hidden="true"></i>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!-- <div class="row clearfix" >
+                        <div class="col-md-12">
+                            <div class="form-group text-right mt-2 mb-0">
+                                <i *ngIf='contactsList.controls.length' class="fa fa-plus text-success" (click)='addNewContact()' aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="row clearfix" *ngIf="contactsList.controls.length">
+                        <div class="col-md-12">
+                            <div class="form-group text-center mt-0 mb-1">
+                                <button class="btn btn-success px-3 py-1"  style="background-color: #0ac8c8;" (click)="updateContacts()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+            <div class="col-md-12" *ngIf='createType == "import"'>
+                <div class="card">
+                    <div class="card-header">
+                <h4 class="mr-2">Import Contacts <span class="pull-right h6"><i *ngIf='!contactsList.controls.length' class="fa fa-plus text-success mr-2" (click)='addNewContact()' aria-hidden="true"></i> <i class="fa fa-times text-danger" aria-hidden="true"></i></span></h4>
+                <!-- <input type="file" class="form-control" (change)="uploadedFile($event)" placeholder="Upload file" accept=".xlsx"> -->
+                </div>
+                <div class="card-body">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text px-2 py-1" id="inputGroupFileAddon01">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                        <input #myInput type="file" class="custom-file-input mr-2" id="inputGroupFile01" accept=".xlsx" (change)="uploadedFile($event)" aria-describedby="inputGroupFileAddon01"><button type='button' class="input-group-text py-1" (click)="submitFile($event)">Submit</button>
+                        <label class="custom-file-label" for="inputGroupFile01">{{labelTitle}}</label>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

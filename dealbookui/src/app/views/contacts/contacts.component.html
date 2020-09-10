@@ -1,0 +1,54 @@
+
+<div class="row">
+    <div class="col-xs-12 col-md-4 pull-left h5" *ngIf='!isCreateContact'>
+        <span class="top-menu-heading mr-3" (click)="createContacts('create')"><i class="fa fa-plus" aria-hidden="true"></i> Add Contact</span>
+        <span class="top-menu-heading" (click)="createContacts('import')"><i class="fa fa-upload" aria-hidden="true"></i> Import Contacts</span>
+    </div>
+    <div class="col-xs-12 col-md-8 pull-right form-inline " *ngIf='!isCreateContact'>
+        <div class="mr-2 pr-2">Total Count : <span class="count">{{totalCount}}</span></div>
+        <label for="sortby" class="h6"><i class="fa fa-sort" aria-hidden="true"></i> </label>
+        <select class="form-control" [(ngModel)]="order" id="sortby">
+            <option value="">Search column</option>
+            <ng-container *ngFor="let col of model | async;">
+                <option *ngIf="col.display" [value]="col.column"><i class="fa fa-upload" aria-hidden="true"></i>{{col.column}}</option>
+            </ng-container>
+        </select>
+        <div class="form-group-inline has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input type="text" [disabled]="order == ''" class="form-control "  [placeholder]="order == ''? 'Please selcet column':'Enter text'" (input)="filterRows($event.target.value)" />
+        </div>
+        
+    </div>
+  </div><br><!--/.row-->
+  <app-add-contact *ngIf='isCreateContact' title="Create Contact" [createType]="createType" (closeAddContact)="closeAddContact($event)"></app-add-contact>
+  <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+  <div class="rows head">
+    <ng-container *ngFor="let col of model | async; let i=index; let active=false;">
+        <div #colHead *ngIf="col.display" [ngClass]="'column-'+i" class="columns" [class.active]="order==col.column">
+            <span (click)="sortColumn(col.column, !assending)">{{col.column}}</span>
+            <i class="fa fa-sort-desc pull-right sort-icon" [class.active]="!assending" aria-hidden="true"></i>
+            <div class="resize-col" aria-hidden="true" (mousedown)="onResizeColumn($event, '.column-'+i, colHead)"></div>
+        </div>
+    </ng-container>
+    <div class="column-last">&nbsp;</div>
+</div>
+
+<section #ptssection style="padding-right: 0.8em;">
+    <cdk-virtual-scroll-viewport itemSize="32" style="height: 100%;scrollbar-width: thin;">
+        <div class="rows " *cdkVirtualFor='let contact of this.currentContactList; let index = index;' [attr.id]='getId(contact.name)' [class.active-row]="selectedRowIndex == index"    #cardcontainer>
+            
+            <div *ngIf="index == 0">
+                <app-contact-card  id="{{contact.id}}" class="ptscontactcard" (openWindow)='openWindow()' *ngIf="loggedInUserEmail !== contact.email" (scrollToTop)="scrollToTop($event)" [selectedHierarchy]="selectedHierarchy" [isFirst]="isFirst" (selectedRow)="selectedRow($event)" [contact]="contact"  [isTrue]="isTrue"
+                [index]='index' (focus)="focused($event)" (focusout)="focusedOut($event)" #firstcontact></app-contact-card>
+            </div>
+            <div *ngIf="index != 0">
+                <app-contact-card id="{{contact.id}}" class="ptscontactcard" (openWindow)='openWindow()' *ngIf="loggedInUserEmail !== contact.email" (scrollToTop)="scrollToTop($event)" [selectedHierarchy]="selectedHierarchy" [isFirst]="isFirst" (selectedRow)="selectedRow($event)" [contact]="contact" [isTrue]="isTrue"
+                [index]='index' (focus)="focused($event)" (focusout)="focusedOut($event)"></app-contact-card>
+            </div>
+            
+        </div>
+    </cdk-virtual-scroll-viewport>
+</section>
+</div>
+
+

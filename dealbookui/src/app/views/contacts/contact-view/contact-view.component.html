@@ -1,0 +1,143 @@
+<div class="card container-fluid my-2" style="margin-left: 0.2em;border-top: 1px solid transparent;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;">
+    <div class="row my-2 mr-0" style="padding: 5px;">
+
+        <div class="col-lg-9" [class.col-lg-12]="activeTab == 'edit'" >
+            <ul class="nav nav-tabs mb-2">
+                <li class="nav-item">
+                    <a data-target="#profile" (click)="activeView('activies')" data-toggle="tab" class="nav-link" [ngClass]="activeTab == 'activies' ? 'active':''">Activities</a>
+                </li>
+                 <li class="nav-item">
+                    <a data-target="#messages" (click)="activeView('followup')" data-toggle="tab" class="nav-link" [ngClass]="activeTab == 'followup' ? 'active':''">Follow up</a>
+                </li> 
+                <li class="nav-item">
+                    <a data-target="#edit" (click)="activeView('edit')" data-toggle="tab" class="nav-link" [ngClass]="activeTab == 'edit' ? 'active':''">Edit</a>
+                </li>
+            </ul>
+
+            <!-- <span class="btns add-activity" (click)='(!editActivety && activeTab != "edit") ? addActivities():""'><i class="fa fa-plus" [class.disabled]="(editActivety || activeTab == 'edit')"></i></span> -->
+            <!-- =========================================  Add Form ===================================== -->
+            <ng-container *ngFor="let addActivity of addActivites; let index=index;">
+                <app-add-activity *ngIf="activeTab == 'activies' || activeTab == 'followup'" [contact]="contact" [addActivity]="addActivity" (addedActivity)="addedActivity($event)" (submitActivity)="submitActivity($event)" (removeActivity)="removeActivity($event)" [index]='index' [type]="activetyType"></app-add-activity>
+            </ng-container>
+            <!-- <ng-container *ngIf="activityEdit == 'true'" >
+                <app-edit-activity *ngIf="activeTab == 'activies' || activeTab == 'followup'" [addActivity]="addActivity" (submitActivity)="submitActivity($event)" (removeActivity)="removeActivity($event)" [index]='index'></app-edit-activity>
+            </ng-container> -->
+            <!-- =========================================  End Form ===================================== -->
+
+            <div class="tab-content p-b-3">
+                <div class="tab-pane" [ngClass]="activeTab == 'activies' ? 'active':''" id="activies">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="btns add-activity" (click)='(!editActivety && activeTab != "edit") ? addActivities():""'><i class="fa fa-plus" style="background-color: #fff;color: #037777;;" [class.disabled]="(editActivety || activeTab == 'edit')"></i></span>
+                            <table style="border:1px;width:100%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" class="table">
+                                <thead style="background-color:  #037777">
+                                    <tr>
+                                        <th style="width:16%;color: white;">Activity Type</th>
+                                        <th style="width:20%;color: white;">Comment</th>
+                                        <th style="width:17%;color: white;">Created Date</th>
+                                        <th style="width:23%;color: white;">Created By</th>
+                                        <th style="width:16%;color: white;">FollowUp Date</th>
+                                        <th style="width:20%;color: white;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr  *ngFor="let activity of activityList; let index = index;">
+                                        <td>{{activity.type.name}} </td>
+                                        <td style="white-space: initial;">{{activity.note}} </td>
+                                        <td style="white-space: initial;">{{activity.createdOn | date:'dd MMM y hh:mm a'}}</td>
+                                        <td style="white-space: initial;">  {{activity.createdByName}}</td>
+                                        <td style="white-space: initial;" *ngIf="null != activity.isFollowup && activity.isFollowup == true">{{activity.followupDate | date:'dd MMM y hh:mm a'}}</td>
+                                        <td style="white-space: initial;" *ngIf="null == activity.isFollowup || activity.isFollowup == false"></td>
+                                        <td><span class="btns-right pull-right">
+                                            <i class="fa fa-edit" (click)="editActivity(index,'edit')"></i> 
+                                            <i style="margin-left: 10px;"class="fa fa-trash text-danger" (click)="deleteActivity(index,activity.id)" aria-hidden="true"></i>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+                <div class="tab-pane" [ngClass]="activeTab == 'followup' ? 'active':''" id="followup">
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table style="border:1px;width:100%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" class="table">
+                                <thead style="background-color:   #037777">
+                                    <tr>
+                                        <th style="width:19%;color: white;">Activity Type</th>
+                                        <th style="width:27%;color: white;">Comment</th>
+                                        <th style="width:21%;color: white;">Created Date</th>
+                                        <th style="width:25%;color: white;">FollowUp Date</th>
+                                        <th style="width:30%;color: white;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let activity of activityList; let index = index;">
+                                    
+                                    <tr *ngIf="activity.isFollowup && (activity.isFollowup | json) != '{}'">
+                                        <td>{{activity.type.name}} </td>
+                                        <td style="white-space: initial;">{{activity.note}} </td>
+                                        <td style="white-space: initial;">{{activity.createdOn | date:'dd MMM y hh:mm a'}}</td>
+                                       <td style="white-space: initial;">{{activity.followupDate | date:'dd MMM y hh:mm a'}}</td>
+                                        <td><span class="btns-right pull-right"><i class="fa fa-edit"
+                                            (click)="editActivity(index)"></i> <i style="margin-left: 1em;"
+                                            class="fa fa-trash text-danger" (click)="deleteActivity(index)"
+                                            aria-hidden="true"></i></span>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                </tbody>
+                            </table>    
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" [ngClass]="activeTab == 'edit' ? 'active':''" id="edit">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mt-2">
+                                <!-- <app-add-contact *ngIf="activeTab == 'edit'" (closeAddContact)="closeAddContact($event)" [contact]='contact' [createType]="'create'" title="Edit Contact"></app-add-contact> -->
+                                <app-edit-contcat  (closeAddContact)="closeAddContact($event)" [contact]='contact' [createType]="'create'" title="Edit Contact"></app-edit-contcat>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 text-xs-center" *ngIf="activeTab !== 'edit'">
+            <h6 class="m-y-2 profile"> {{contact.name}}
+            </h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Deals</h6>
+                    <a href="" class="tag tag-default tag-pill">Euclid(2)</a>
+                    <a href="" class="tag tag-default tag-pill">Wells forgo(10)</a>
+                </div>
+                <div class="col-md-6">
+                    <h6>Consultants</h6>
+                    <a href="" class="tag tag-default tag-pill">HTML5(5)</a>
+                    <a href="" class="tag tag-default tag-pill">React(3)</a>
+                    <a href="" class="tag tag-default tag-pill">Java(6)</a>
+                    <a href="" class="tag tag-default tag-pill">Angularjs(2)</a>
+                    <a href="" class="tag tag-default tag-pill">PHP(4)</a>
+                </div>
+                <div class="col-md-12">
+                    <hr>
+                    <span class="tag tag-primary"><i class="fa fa-meetup" aria-hidden="true"></i>
+                        {{contact.meetingCount}} Meetings</span>
+                    <span class="tag tag-success"><i class="fa fa-phone custom"></i> {{contact.callCount}} Calls</span>
+                    <span class="tag tag-danger"><i class="fa fa-envelope" aria-hidden="true"></i>
+                        {{contact.emailCount}} Emails</span>
+                    <span class="tag tag-danger"><i class="fa fa-file-text" aria-hidden="true"></i>
+                            {{contact.textCount}} Texts</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

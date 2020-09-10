@@ -1,0 +1,83 @@
+<form #regForm='ngForm' (ngSubmit)="Register(regForm)" class="activity-form" style="height: 3em;">
+    <div class="col-sm-12 row mt-2" ngModelGroup="activity" style="border: 1px;width: 99.5%;margin:0.5em -1em 0 0.2em;align-items: flex-start;padding:0.5em;background: #eef2f2;">
+        <!-- <div class="col-12" style="align-items: flex-start;"> -->
+            <!-- <div class="row m-2 text-center"> -->
+                <div class="col-sm-2 px-1">
+                    <select style="font-size:13px;" required class="form-control p-1" placeholder="Activity Type" name="activityType"
+                        [(ngModel)]='activity.activityType'>
+                        <option value="">Activity Type</option>
+                        <option value="1">Call</option>
+                        <option value="2">Email</option>
+                        <option value="3">Meeting</option>
+                        <option value="4">Text</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 px-1" style="line-height: 2.5em;">
+                    <div class="form-inline" ngModelGroup="fallowup">
+                        <div class="form-check">
+                            <label style="font-size:13px;" class="form-check-label" name="Follow Up">
+                                <input style="font-size:13px;" class="form-check-input" #active [(ngModel)]='activity.isFollowup'
+                                    name="isFollowup" [checked]='activity.isFollowup' type="checkbox" (change)="isFollowupDate(activity.fallowup)">Follow Up
+                            </label>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control p-1" name="fallowUpDate" style="font-size:13px;" placeholder="Datepicker" [(ngModel)]='activity.fallowup' bsDatepicker [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers:false}" [daysDisabled]="[6,0]" *ngIf="activity.isFollowup"/>
+                        </div>
+                    </div>
+                </div>
+            <!-- </div>
+            <div class="row mx-2"> -->
+                <div class="col-sm-4 px-1" style="display:flex; flex-direction: row; justify-content: center;">
+                    <div style="width:20%;line-height: 2.5em;">
+                        <label style="font-size:13px;" for="message" name="Comment" >Comment</label>
+                    </div>
+                    <div style="width: 80%;max-height: 2em;margin-left: 1em;min-width: -webkit-fill-available;">
+                    <textarea style="height: 2.3em;font-size:13px;" class="form-control" required id="message" name="body" rows="2" name="subject"
+                        [(ngModel)]='activity.subject' placeholder="Subject" ></textarea>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-4 px-1" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label for="message" name="Comment" >Comment</label>
+                    <textarea style="margin-left: 1em;" class="form-control" required id="message" name="body" rows="2" name="subject"
+                        [(ngModel)]='activity.note' placeholder="Note" ></textarea>
+                    
+                </div> -->
+                <div class="col-sm-2 text-center pt-1">
+                    <!-- <ng-container *ngIf="type == 'Edit'"> -->
+                        <span style="font-size:15px;width:50%"  *ngIf="type == 'Edit'">
+                            <i style="font-size: 25px;
+                             margin: 0px;
+                            padding: 0px;"  class="fa fa-check-circle text-primary mr-1"
+                            *ngIf="activity.activityType != '' && activity.subject != '' && isFollow(active.isFollowup, activity.fallowup)"
+                            (click)="activityUpdate(activity, index)" aria-hidden="true"></i>
+                        <i style="font-size:15px;"
+                            class="fa fa-times-circle" style="font-size: 25px;
+                            float: right;
+                            margin: 0px;
+                            padding: 0px;" (click)="activityRemove(activity,index)"
+                            aria-hidden="true"></i> </span>
+                    <!-- <span class="activity-btns" style="font-size: 1.5em;">
+                    </span> -->
+                    <!-- </ng-container> -->
+                    <!-- <ng-container *ngIf="type == 'Add'"> -->
+                        <span style="font-size:15px;width:50%" *ngIf="type == 'Add'"><i class="fa fa-check-circle text-primary mr-1" style="font-size: 25px;
+                            margin: 0px;
+                            padding: 0px;"
+                        
+                            *ngIf="activity.activityType != '' && activity.subject != '' && isFollow(active.isFollowup, activity.fallowup)"
+                            (click)="activitySubmit(activity, index)" aria-hidden="true"></i>
+                        <i
+                            class="fa fa-times-circle" style="font-size: 25px;
+                            float: right;
+                            margin: 0px;
+                            padding: 0px;" (click)="activityRemove(activity,index)"
+                            aria-hidden="true"></i></span>
+                    <!-- <span class="activity-btns" style="font-size: 1.5em;">
+                        </span> -->
+                    <!-- </ng-container> -->
+                </div>
+            <!-- </div> --> 
+        <!-- </div> -->
+
+    </div>
+</form>

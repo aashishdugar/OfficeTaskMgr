@@ -1,0 +1,60 @@
+.rows {
+    border-bottom: 1px solid #ececec;
+    padding: 5px;
+}
+
+.row-container {
+    position: relative;
+    display: flex;
+}
+
+span {
+    color: #00c6c6;
+}
+
+.head {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.columns {
+    /* width: calc((100% - 45px)/7); */
+    word-break: break-word;
+    padding: 5px 2px;
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    flex: 1;
+    text-indent: 5px;
+}
+
+.columns span:hover {
+    color: #00c6c6;
+    font-weight: bold;
+}
+
+.name,
+.company,
+.contactowner {
+    text-transform: capitalize;
+}
+
+.row-container.highlight {
+    background: #bfbfbf;
+    color: #000;
+    font-weight: bold;
+}
+
+.row-container.active {
+    background: #d9d9d9
+}
+
+.highlight span {
+    color: #fff;
+}
+
+.selected {
+    background: #037777!important;
+    color: #fff!important;
+}

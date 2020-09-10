@@ -1,0 +1,348 @@
+import { Injectable, OnInit, NgZone } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { ContactsModel} from '../model/contacts.model';
+import { EventEmitterService } from './eventEmitter.service';
+import { ToastrService } from 'ngx-toastr';
+import { Title } from '@angular/platform-browser';
+const EventSource:any = window['EventSource'];
+
+export interface Contactowner {
+  id: number | string,
+  name: string
+}
+export interface Contact {
+  id: number | string,
+  email: string,
+  phonenumber: number | string,
+  contactowner: Contactowner,
+  lastactivitydate: string,
+  creationdate: string,
+  company: string,
+  isuser: boolean,
+  name: string,
+  activities: []
+}
+
+interface DataStore {
+  contacts: Contact[],
+  ownersList:Contact[],
+  activities : any[],
+  contactsList: any[],
+  emailsList: any[],
+  reportTo: any[]
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ContactsService {
+  private _contacts = new BehaviorSubject<Contact[]>([]);
+  private _ownersList = new BehaviorSubject<Contact[]>([]);
+  private _activities = new BehaviorSubject<any[]>([]);
+  private _displayColumns = new BehaviorSubject<any[]>([]);
+  private dataStore: DataStore  = { 
+    contacts: [], 
+    ownersList:[],
+    activities: [],
+    contactsList:[],
+    emailsList:[],
+    reportTo:[]
+
+   };
+  public contactId = null;
+  readonly contacts = this._contacts.asObservable();
+  readonly ownersList = this._ownersList.asObservable();
+  readonly activities = this._activities.asObservable();
+  readonly displayColumns = this._displayColumns.asObservable();
+  private api;
+  private updateContact : boolean = false;
+  public getHierarchyflag = false;
+  public hierarchyList = [];
+  private loggedInUser : Contact;
+  private defaultWidgets: any = [{widgetName: "Activites", widgetCriteria: "activities", data: []}, {widgetName: "Contacts", widgetCriteria: "contacts", data: []}];
+  private widgets:any= [];
+
+  constructor(private http: HttpClient, private zone:NgZone, private emService: EventEmitterService, private toastr: ToastrService) {
+    emService.showHideLoader(true);
+    this.api = new ContactsModel().API_END_POINTES;
+    this._displayColumns.next(new ContactsModel().TABLE_COLUMNS);
+    // if(window.localStorage.getItem("contacts")) {
+    //   let data = JSON.parse(window.localStorage.getItem("contacts"));
+    //   this.alterData(data);
+    // }else {
+      this.loadWidgets();
+    // }
+    var evtSource = new EventSource("/contactregister", { withCredentials: false });
+    evtSource.onmessage = (e) => {
+      let data;
+      try {
+        data = JSON.parse(e.data);
+      } catch (error) {
+        data = e.data;
+      }
+      
+      console.log(data);
+      ((d)=>{
+        if(d && typeof(d) == "object") {
+          let index = this.dataStore.contacts.findIndex(c=>{
+            if(d.status) {
+              return c.id == d.contact.id;
+            }
+            return c.id == d.id;
+          });
+          if(d.status == "update") {
+            this.dataStore.contacts.splice(index, 1, d.contact);
+            this.emService.updateContacts();
+          }else if(index > -1) {
+            this.dataStore.contacts[index].lastactivitydate = d.lastactivitydate;
+            this.dataStore.contacts[index].activities=d.activities;
+          }else{
+            this.dataStore.contacts.unshift(d.contact);
+          }
+          // this.dataStore.contacts.splice(this.dataStore.contacts.findIndex(c=>{
+          //   return c.id == data.id;
+          // }),1);
+          // this.dataStore.contacts.unshift(data);
+          this.updateContact = false;
+          this.updateDataStore(d);
+          this.zone.run(() => {});
+          this.emService.updateActivities();
+            emService.showHideLoader(false);
+        }else {
+          let index = this.dataStore.contacts.findIndex(c=>c.id == d);
+          this.dataStore.contacts.splice(index, 1);
+          this.updateDataStore(this.dataStore.contacts);
+        }
+      })(data)
+   }
+   evtSource.onerror = (e) => {
+      // console.log('connection error');
+      //  evtSource.close();
+   }
+   evtSource.onopen = (e) => {
+      // console.log('connection open');
+      //  console.log(e);
+   }
+  }
+  async loadWidgets() {
+    let uid = JSON.parse(window.localStorage.getItem("user")).uid;
+    console.log("Calling "+this.api.getWidgets+uid);
+    let widgets = await this.http.get(this.api.getWidgets+uid).toPromise();
+    widgets && widgets["length"] > 0 ? this.widgets = widgets : this.defaultWidgets;
+    // this.widgets = this.defaultWidgets;
+    this.loadContacts();
+  }
+  loadContacts() {
+    console.log("Loading Contacts "+this.api.contacts);
+    this.http.get<Contact[]>(this.api.contacts).subscribe(data=>{
+      this.alterData(data);
+    },error=>console.log('Could not load Contacts.'))
+  }
+
+  alterData(data) {
+    let user = JSON.parse(window.localStorage.getItem("user")).email;
+    console.log("Setting data to Local store: "+JSON.stringify(data));
+    this.dataStore.contacts = data;
+    this.loggedInUser =  this.dataStore.contacts.filter(c => c.email == user)[0];
+    this.updateDataStore(data);
+  }
+  updateDataStore(data) {
+    // window.localStorage.setItem("contacts", JSON.stringify(this.dataStore.contacts));
+    let owners=[];
+      let activites=[];
+      let contactsList = [];
+      let emailsList = [];
+      let reportTo = [];
+      // this._ownersList.next(this.dataStore.contacts.filter(a=>a.isuser));
+      // this.dataStore.activities.push(...this.dataStore.contacts.filter(a=>a.activities.length && a.activities));
+      console.log("Creating Contact List and emailList ");
+      this.dataStore.contacts.forEach(((o,a)=>c=>{
+        contactsList.push(c.name);
+        emailsList.push(c.email);
+        if(c.isuser) o.push(c);
+        if(c.reportto) reportTo.push(c.reportto.name);
+        // if(c.activities.length) a.push(...c.activities);
+        if(c.activities.length) a.push(...c.activities.map(a=> ({...a, contactName: c.name})));
+      })(owners, activites));
+      console.log("activities:"+activites);
+      console.log("contactList:"+contactsList)
+      console.log("emailsList:"+emailsList)
+      this._ownersList.next(owners);
+      this.dataStore.activities= activites;
+      this.dataStore.reportTo = [...new Set(reportTo)];
+      this.dataStore.contactsList= contactsList;
+      this.widgets.forEach(item => {
+        item.data = this.filterWidgets(item);
+      })
+      // this.widgets[0].data = activites;
+      // this.widgets[1].data = this.dataStore.contacts;
+      this.dataStore.emailsList= emailsList;
+      this._contacts.next(Object.assign({}, this.dataStore).contacts);
+      this._activities.next(this.dataStore.activities);
+
+      this.emService.showHideLoader(false);
+  }
+   /**********  Set Methods  **********/
+  addContacts(params, eventType?) {
+    let message = "New contact add successfully";
+    if(eventType) {
+      this.updateContact = true;
+      message = "Contact updated successfully";
+    }
+    return this.http.post(this.api.createContact, params).subscribe(data=>{
+      this.toastr.success(message);
+      // this.loadContacts();
+    });
+  }
+
+  getHierarchyFlag(isBoolean) {
+    this.getHierarchyflag = isBoolean;
+  }
+  setcontactId(contactId) {
+    this.contactId = contactId;
+  }
+  getHierarchy() {
+    return this.http.get(this.api.hierarchy+this.contactId);
+  }
+  setHierarchyList(list) {
+    this.hierarchyList = list[0];
+  }
+  getHierarchyList() {
+    return this.hierarchyList;
+  }
+
+  addActivity(contactId, params) {
+    return this.http.post(this.api.addActivity + contactId, params).pipe(map(data => {
+      let message = "Activity added successfully";
+      this.toastr.success(message);
+    }));
+    // .subscribe(data=>{
+    //   this.dataStore.activities.unshift(params);
+    //   this._activities.next(this.dataStore.activities);
+    // }, e=> console.log(e));
+  }
+  deleteData(type, id) {
+    return this.http.get(this.api[type] + id).pipe(map(data => {
+      let message = "Activity deleted successfully";
+      if("deleteContact" == type){
+        message = "Contact deleted successfully";
+      }
+      this.toastr.success(message);
+      // if("deleteContact" == type){
+      //   let index = this.dataStore.contacts.findIndex(c=> c.id == id);
+      //   this.dataStore.contacts.splice(index, 1);
+      //   this.updateDataStore(this.dataStore.contacts);
+      // }
+      // console.log(data);
+    }));
+  }
+
+  getActivitiesList(req) {
+    return this.http.post(this.api.activitiesList, req);
+  }
+
+  updateColumns(data) {
+    this._displayColumns.next(data);
+  }
+
+  getUser() {
+    return this.loggedInUser;
+  }
+
+  /**********  Get Methods  **********/
+  getContacts() {
+    return this._contacts.value;
+  }
+
+  getContactsList() {
+    return this.dataStore.contactsList;
+  }
+
+  getemailsList() {
+    return this.dataStore.emailsList;
+  }
+
+  addWidget(widget, data?) {
+    // this.widgets.unshift({...widget, data : data});
+    return this.http.post(this.api.createWidget, widget).pipe(map(data => {
+      console.log(data);
+        let message = "Widget created successfully";
+        data['data'] = this.filterWidgets(data).length > 0 ? this.filterWidgets(data): alert("No data Available");
+        this.widgets.unshift(data);
+        this.toastr.success(message);
+    }),catchError(err => {
+      this.toastr.error(err.error);
+      return throwError(err);
+  }));
+    // this.widgets.unshift({...widget, data : this.filterWidgets(widget)});
+  }
+  deleteWidgets(id) {
+    return this.http.get(this.api.deleteWidgets+id).pipe(map(data => {
+      console.log(data);
+        let message = "Widget deleted successfully";
+        this.widgets = this.widgets.filter(w => w.id !== id);
+        this.toastr.success(message);
+    }),catchError(err => {
+      this.toastr.error(err.error);
+      return throwError(err);
+  }));
+  }
+  filterWidgets(widget) {
+    let d = this.dataStore[widget.widgetCriteria.toLowerCase()].filter(ele=>{
+      let a = [];
+        for (let [key, value] of Object.entries(widget)) {
+          if(key !== "widgetName" && key != "widgetCriteria" && key != "data" && key != "id" && key != "uid") {
+            if(typeof ele[key] == "object") {
+              if(key.endsWith('fallowUp'))  {
+                this.validateData(value, ele[key], "fallowUpDate", a);
+              }else {
+                this.validateData(value, ele[key], "name", a);
+              }
+            }else {
+              this.validateData(value, ele, key, a);
+                // let list = value && value['split'](",");
+                // if(list != undefined) {
+                //   a.push(list.some(v=> ele[key] == v))
+                // } else {
+                //   a.push(false);
+                // }
+            }
+          }
+        }
+        return a.every(Boolean);
+    })
+    return d;
+  }
+  getWidgets() {
+    return this.widgets;
+  }
+
+  validateData(value, ele, key, a) {
+    let list = value && value['split'](",");
+              if(list != undefined) {
+                if((key.toLowerCase()).endsWith('date')) {
+                  if(key == "fallowUpDate"){
+                    if(ele['fallowUp']) {
+                      let today = new Date().setHours(0,0,0,0);
+                      let followupDate = new Date(ele['fallowUp'][key]).getTime();
+                      console.log(today >= followupDate && followupDate <= list[0]);
+  
+                      // a.push(list.some(v=> (new Date().setHours(0,0,0,0)) >= new Date(ele[key]).getTime() && new Date(ele[key]).getTime() <= v));
+                      a.push(list.some(v=> today <= followupDate && followupDate <= v));
+                    }else {
+                      a.push(false);
+                    }
+                  }else{
+                    a.push(list.some(v=> new Date(ele[key]).getTime() >= v));
+                  }
+                }else {
+                  a.push(list.some(v=> ele[key] == v));
+                }
+              } else {
+                a.push(false);
+              }
+  }
+ 
+}

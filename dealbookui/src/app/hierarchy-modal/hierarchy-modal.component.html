@@ -1,0 +1,74 @@
+<div class="modal fade" id="modal-hierarchy" style="display: none;z-index: 9999;overflow: hidden;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #037777; color:#fff;">
+                <h5 class="modal-title">{{this.utils.name }} {{'- Hierarchy'}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color: #fff;">×</span></button>
+                     </div>
+            <div class="modal-body pts-pull-middle">
+                 <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info mainDiv">
+                            <div class="box-header with-border">
+                            </div>
+                            <div class="box-body mainSubDiv tf-tree  tf-gap-sm  col-md-12">
+                                <ul class="content-ul">
+                                    <li class="content-li" id="{{'mainli'+this.utils.contactId}}">
+                                        <div class="contentDiv tf-nc" >
+                                            <div style="background-color: #4b8c91;color: #fff; border-bottom: 1px solid #c8ced3;;">
+                                                <h6 style="font-weight: bold;">{{this.utils.contactName}}</h6>
+                                            </div>
+                                           
+                                            <span class="tag tag-primary"><i class="fa fa-meetup" aria-hidden="true"></i>
+                                                </span>
+                                            <span class="tag tag-success"><i class="fa fa-phone custom"></i>
+                                              </span>
+                                            <span class="tag tag-danger"><i class="fa fa-envelope" aria-hidden="true"></i>
+                                               
+                                               </span>
+                                               <div>
+                                                <i (click)="getChildForParent(this.utils.contactId)" class="fa fa-plus-circle addcontact" aria-hidden="true"></i>
+                                               </div>
+                                        </div>
+        
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>  -->
+
+                <organization-chart chartClass="myChart" [datasource]="this.utils.ds"  [nodeTemplate]="myNodeTemplate" [zoomoutLimit]="0.2" [zoominLimit]="1" [pan]="true" [zoom]="true">
+                </organization-chart>
+                
+                
+                <ng-template #myNodeTemplate let-nodeData="datasource">
+                    <div (click)="selectNode(nodeData)">
+                        <div class="position">{{nodeData.name}}</div>
+                       
+                        <div class="fullname">{{nodeData.title}}<br>
+                            <i class="fa fa-meetup" aria-hidden="true"></i><span>{{nodeData.meetingCount}}
+                        </span>&nbsp; 
+                        <i class="fa fa-phone custom"></i><span> {{nodeData.callCount}} </span> &nbsp; 
+                        <i class="fa fa-envelope" aria-hidden="true"></i><span>{{nodeData.emailCount}} &nbsp;
+                        </span>&nbsp;
+                        <i class="fa fa-envelope" aria-hidden="true"></i><span>{{nodeData.textCount}} &nbsp;
+                        </span>
+                    </div>
+                    <i (click)="showChildren(nodeData, $event)" *ngIf="!(nodeData.children && nodeData.children.length)" class="oc-toggle-btn oc-icon oc-icon-plus ng-star-inserted"></i>
+                        
+                    </div>
+                 
+                </ng-template>
+            </div>
+            <!-- <div class="modal-footer pts-pull-middle">
+                
+
+            </div> -->
+        </div>
+    </div>
+</div>
+
+

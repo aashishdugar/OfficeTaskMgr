@@ -1,0 +1,11 @@
+<div class="card mt-2" *ngFor="let a of activityList">
+    <div class="card-header">
+        <div>{{a.activityType}}</div>
+        <div>{{a.date | datePipe | date:'mediumDate'}}</div>
+    </div>
+    <div class="card-body">
+        <!-- <h5 class="card-title">Special title treatment</h5> -->
+        <p class="card-text">{{a.subject}}</p>
+        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+    </div>
+</div>

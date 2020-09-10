@@ -1,0 +1,21 @@
+<header>
+    <div class="navbar-wrapper">
+        <!-- <button type="button" class="hamburger is-closed" [ngClass]="!isExpand ? 'is-closed' : 'is-open'" (click)="expandMenu()" data-toggle="offcanvas">
+        <span class="hamb-top"></span>
+        <span class="hamb-middle"></span>
+        <span class="hamb-bottom"></span>
+    </button> -->
+        <i class="fa fa-bars" aria-hidden="true" *ngIf="!isExpand" (click)="expandMenu()"></i>
+        <i class="fa fa-chevron-left" aria-hidden="true" *ngIf="isExpand" (click)="expandMenu()"></i>
+    </div>
+    <div class="navbar-header pl-2 user-icon">
+        <a class="navbar-brand" routerLink=""><img src="assets/logo.png" alt="Logo" /></a>
+        <span class="mr-3"><i class="fa fa-cog mr-2" aria-hidden="true"></i> <span>{{Username}} </span> <i class="fa fa-user-circle-o" aria-hidden="true" (click)="showlogout = !showlogout"></i></span>
+        <div class="user-profile" *ngIf="showlogout">
+            <ul class="list-group">
+                <li class="list-group-item">Profile</li>
+                <li class="list-group-item" (click)="authService.SignOut()">Logout</li>
+              </ul>
+        </div>
+    </div>
+</header>

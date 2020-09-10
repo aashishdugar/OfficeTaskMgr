@@ -1,0 +1,51 @@
+<main #window class="side-window some-parent-class" [ngClass]="className" [class.min-window]="windowMinimize" [@slideMenu]="animate ? false : true" (@slideMenu.done)="animEnd($event)" cdkDragBoundary=".main-panel" cdkDrag [cdkDragDisabled]="windowMinimize">
+    <div class="container-fluid">
+        <p class="m-0" cdkDragHandle>{{title}}<span></span></p>
+        <span class="closebtn"> <i class="fa fa-window-maximize" (click)='windowResize(false)' aria-hidden="true" *ngIf="windowMinimize"></i> <i class="fa fa-window-minimize" (click)='windowResize(true)' *ngIf="!windowMinimize" aria-hidden="true"></i> <i class="fa fa-window-close" (click)='close()' aria-hidden="true"></i></span>
+        <div class="p-3">
+            <!-- <button class="btn btn-success px-3 py-1" style="float: right; background-color: #037777;" *ngIf="cilick !== true" (click)="collapseHierachy()"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-success px-3 py-1" style="float: right;background-color: #037777;" *ngIf="cilick === true" (click)="getAllDataHierarchyData()"><i class="fa fa-plus"></i></button> -->
+            <i style="font-size:15px;"
+            class="fa fa-minus-circle" style="font-size: 31px;
+            float: right;
+            margin: 0px 10px;
+            padding: 0px;
+            color: #037777;" *ngIf="cilick !== true" (click)="collapseHierachy()"
+            aria-hidden="true"></i>
+            <i style="font-size:15px;"
+            class="fa fa-plus-circle" style="font-size: 31px;
+            float: right;
+            margin: 0px 10px;
+            padding: 0px;
+            color: #037777;" *ngIf="cilick === true" (click)="getAllDataHierarchyData()"
+            aria-hidden="true"></i>
+            <!-- <button class="btn btn-success px-3 py-1" *ngIf="cilick !== true"style="background-color: #0ac8c8;" (click)="collapseHierachy()">Expand</button>
+            <button class="btn btn-success px-3 py-1" *ngIf="cilick === true" style="background-color: #0ac8c8;" (click)="getAllDataHierarchyData()">Expand1</button> -->
+            <div>
+                <!-- <ng-template dynamic-host></ng-template> -->
+                <organization-chart chartClass="myChart" [datasource]="this.utils.ds"  [nodeTemplate]="myNodeTemplate" [zoomoutLimit]="0.2" [zoominLimit]="1" [pan]="true" [zoom]="true">
+                </organization-chart>
+                
+                
+                <ng-template #myNodeTemplate let-nodeData="datasource">
+                    <div (click)="selectNode(nodeData)">
+                        <div class="position">{{nodeData.name}}</div>
+                       
+                        <div class="fullname">{{nodeData.title}}<br>
+                            <i class="fa fa-meetup" aria-hidden="true"></i><span>{{nodeData.meetingCount}}
+                        </span>&nbsp; 
+                        <i class="fa fa-phone custom"></i><span> {{nodeData.callCount}} </span> &nbsp; 
+                        <i class="fa fa-envelope" aria-hidden="true"></i><span>{{nodeData.emailCount}} &nbsp;
+                        </span>&nbsp;
+                        <i class="fa fa-envelope" aria-hidden="true"></i><span>{{nodeData.textCount}} &nbsp;
+                        </span>
+                    </div>
+                    <!-- <i (click)="showChildren(nodeData, $event)" *ngIf="!(nodeData.children && nodeData.children.length)" class="oc-toggle-btn oc-icon oc-icon-plus ng-star-inserted"></i> -->
+                        
+                    </div>
+                 
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</main>

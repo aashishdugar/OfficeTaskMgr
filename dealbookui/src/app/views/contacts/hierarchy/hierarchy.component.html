@@ -1,0 +1,22 @@
+<!-- <organization-chart chartClass="myChart" [zoomoutLimit]="0.2" [zoominLimit]="1" [datasource]="topEmployee" [nodeTemplate]="myNodeTemplate" [pan]="true" [zoom]="true">
+</organization-chart> -->
+<ngx-org-chart [nodes]="topEmployee" direction="vertical"></ngx-org-chart>
+<ng-template #myNodeTemplate let-employee="datasource">
+    <div (click)="clicked(employee)" class="oc-box oc-border oc-background">
+        <div class="oc-img" *ngIf="employee?.img"><img src="{{employee?.img}}" /></div>
+        <div class="oc-content">
+            <div class="oc-name">{{employee?.name}}</div>
+            <div class="oc-designation">{{employee?.designation}}</div>
+            <div class="col-md-12">
+                <hr class="m-0 box">
+                <span class="tag tag-primary"><i class="fa fa-meetup" aria-hidden="true"></i>
+                    {{getData(employee, "Meeting")}} </span>
+                <span class="tag tag-success"><i class="fa fa-phone custom"></i> {{getData(employee, "Call")}} </span>
+                <span class="tag tag-danger"><i class="fa fa-envelope" aria-hidden="true"></i>
+                    {{getData(employee, "Email")}} </span>
+            </div>
+            <i (click)="addContact(employee, $event)" class="fa fa-plus-circle addcontact" aria-hidden="true"></i>
+            <i (click)="showChildren(employee, $event)" *ngIf="!(employee.children && employee.children.length)" class="oc-toggle-btn oc-icon oc-icon-plus ng-star-inserted"></i>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,19 @@
+
+
+<div class="row-container" (click)="showDetails(contact.id,contact)" [class.active]="selectedIndex == contact.id" [class.highlight]="curHierarchy" [class.selected]="selected">
+    <ng-container *ngFor="let col of model | async; let i = index;">
+        <div class="columns" *ngIf="col.display" [ngClass]="'column-'+i+' '+col.title">
+            <!-- {{col.title!='contactowner' && col.title!='reportto'?contact && contact[col.title]:contact && contact[col.title]?contact && contact[col.title].name:""}} -->
+            {{date.indexOf(col.title) > -1 ? renderDate(contact[col.title], col.title) : renderValue(contact[col.title])}}
+        </div>
+    </ng-container>
+    <div class="column-last"><span>
+        <i title="Hierarchy" (click)="hierarchyPanel(contact, $event);$event.stopPropagation();" class="fa fa-sitemap mr-1" aria-hidden="true"></i> 
+        <i title="notification(s)" (click)="addNote(contact, $event)" class="fa fa-sticky-note-o mr-1" aria-hidden="true"></i>
+        <i title="Delete Contact" (click)="deleteContact(contact, $event.target.value);$event.stopPropagation();" class="fa fa-trash mr-1" style="color:#f00;" aria-hidden="true" ></i>
+    </span></div>
+</div>
+
+<app-contact-view *ngIf="selectedIndex == contact.id " [contact]="contact"   (addActivity)="addActivity($event)"></app-contact-view>
+
+<!-- [isMinimize]="0" -->

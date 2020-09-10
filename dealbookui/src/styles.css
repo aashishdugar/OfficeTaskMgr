@@ -1,0 +1,299 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+.mat-table {
+    width: 100%;
+}
+
+
+/* FONTS */
+
+@font-face {
+    font-family: "TT Tr";
+    src: url("/assets/fonts/trasandinabook.eot");
+    src: url("/assets/fonts/trasandinabook.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/trasandinabook.woff") format("woff"), url("/assets/fonts/trasandinabook.ttf") format("truetype"), url("/assets/fonts/trasandinabook.svg#trasandinabook") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "TT Tr";
+    src: url("/assets/fonts/trasandinabook-italic.eot");
+    src: url("/assets/fonts/trasandinabook-italic.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/trasandinabook-italic.woff") format("woff"), url("/assets/fonts/trasandinabook-italic.ttf") format("truetype"), url("/assets/fonts/trasandinabook-italic.svg#trasandinabook-italic") format("svg");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "TT Tr";
+    src: url("/assets/fonts/trasandinabold.eot");
+    src: url("/assets/fonts/trasandinabold.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/trasandinabold.woff") format("woff"), url("/assets/fonts/trasandinabold.ttf") format("truetype"), url("/assets/fonts/trasandinabold.svg#trasandinabold") format("svg");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "TT Tr";
+    src: url("/assets/fonts/trasandinabold-italic.eot");
+    src: url("/assets/fonts/trasandinabold-italic.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/trasandinabold-italic.woff") format("woff"), url("/assets/fonts/trasandinabold-italic.ttf") format("truetype"), url("/assets/fonts/trasandinabold-italic.svg#trasandinabold-italic") format("svg");
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "proxima-nova-light";
+    font-weight: normal;
+    font-style: normal;
+    src: url("/assets/fonts/proxima-nova-light.eot");
+    src: url("/assets/fonts/proxima-nova-light.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/proxima-nova-light.woff2") format("woff2"), url("/assets/fonts/proxima-nova-light.woff") format("woff"), url("/assets/fonts/proxima-nova-light.ttf") format("truetype"), url("/assets/fonts/proxima-nova-light.svg#proxima-nova-light") format("svg")
+}
+
+@font-face {
+    font-family: "proxima-nova-regular";
+    font-weight: normal;
+    font-style: normal;
+    src: url("/assets/fonts/proxima-nova-regular.eot");
+    src: url("/assets/fonts/proxima-nova-regular.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/proxima-nova-regular.woff2") format("woff2"), url("/assets/fonts/proxima-nova-regular.woff") format("woff"), url("/assets/fonts/proxima-nova-regular.ttf") format("truetype"), url("/assets/fonts/proxima-nova-regular.svg#proxima-nova-regular") format("svg")
+}
+
+@font-face {
+    font-family: "proxima-nova-semibold";
+    font-weight: semibold;
+    font-style: normal;
+    src: url("/assets/fonts/proxima-nova-semibold.eot");
+    src: url("/assets/fonts/proxima-nova-semibold.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/proxima-nova-semibold.woff2") format("woff2"), url("/assets/fonts/proxima-nova-semibold.woff") format("woff"), url("/assets/fonts/proxima-nova-semibold.ttf") format("truetype"), url("/assets/fonts/proxima-nova-semibold.svg#proxima-nova-semibold") format("svg")
+}
+
+@font-face {
+    font-family: "proxima-nova-bold";
+    font-weight: normal;
+    font-style: normal;
+    src: url("/assets/fonts/proxima-nova-bold.eot");
+    src: url("/assets/fonts/proxima-nova-bold.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/proxima-nova-bold.woff2") format("woff2"), url("/assets/fonts/proxima-nova-bold.woff") format("woff"), url("/assets/fonts/proxima-nova-bold.ttf") format("truetype"), url("/assets/fonts/proxima-nova-bold.svg#proxima-nova-bold") format("svg")
+}
+
+@font-face {
+    font-family: "materialdesignicons-webfont";
+    font-weight: normal;
+    font-style: normal;
+    src: url("/assets/fonts/materialdesignicons-webfont.eot");
+    src: url("/assets/fonts/materialdesignicons-webfont.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/materialdesignicons-webfont.woff2") format("woff2"), url("/assets/fonts/materialdesignicons-webfont.woff") format("woff"), url("/assets/fonts/materialdesignicons-webfont.ttf") format("truetype"), url("/assets/fonts/materialdesignicons-webfont.svg#materialdesignicons-webfont") format("svg")
+}
+
+body {
+    font-size: 13px;
+    font-family: "TT Tr", "Helvetica Neue", "Arial", sans-serif;
+}
+
+.theambg {
+    background: #00c6c6;
+}
+
+.theamtext,
+.theamstrong strong {
+    /* color: #2b2b2b; */
+}
+
+.form-control {
+    height: 30px;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+input:focus,
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.rows {
+    border-bottom: 1px solid #efefef;
+}
+
+.head {
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #006e6e;
+    /* color: #00c6c6; */
+    font-size: 14px;
+    display: flex;
+    background: #eaeaea;
+}
+
+.columns {
+    /* width: calc((100% - 45px)/7); */
+    word-break: break-word;
+    padding: 0px 25px 0px 5px;
+    display: inline-block;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    vertical-align: top;
+    flex: 1;
+    min-width: 80px;
+    max-width: 100%;
+}
+
+.columns span {
+    display: inline-block;
+    width: 100%;
+    padding: 5px 0;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
+.head .columns:hover,
+.head .columns.active {
+    background: #cccccc;
+}
+
+.resize-col {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    width: 10px;
+    height: 100%;
+    top: 0;
+    border-right: 3px solid #09c8c8;
+    display: none;
+}
+
+.head .columns:hover .resize-col {
+    display: block;
+    cursor: col-resize;
+}
+
+.column-last {
+    display: inline-block;
+    padding: 5px 0;
+    text-align: center;
+    min-width: 60px;
+    margin-left: 5px;
+}
+
+.column-last i {
+    cursor: pointer;
+    flex: 1
+}
+
+.sort-icon {
+    position: absolute;
+    right: 16px;
+    top: 5px;
+}
+
+.active .sort-icon.active {
+    transform: rotate(180deg);
+    margin-top: 6px;
+}
+
+.orgchart.myChart {
+    background-image: none !important;
+    padding: 0 !important;
+}
+  
+.orgchart.myChart .oc-node .position {
+    box-sizing: border-box;
+    background-color: #abb2b9 !important;
+    color: #fff;
+    font-size: 0.8rem !important;
+    width: 152px;
+    height: 30px;
+    padding: 2px;
+    font-weight: 500;
+    border-top: 1px solid #566573 !important;
+  border-right: 1px solid #566573 !important;
+  border-left: 1px solid #566573 !important;
+  }
+    
+  .orgchart.myChart .oc-node .fullname {
+    box-sizing: border-box;
+    color: #000 !important;
+    background-color: #fff;
+    width: 152px;
+    font-size: 0.8rem !important;
+    height: 58px;
+    padding: 2px;
+    border: 1px solid #566573 !important;
+    /* border-top: 1px solid #566573 !important;
+    border-bottom: 1px solid #566573 !important;
+    border-right: 1px solid #566573 !important;
+    border-left: 1px solid #566573 !important; */
+  }
+
+.orgchart.myChart>orgchart-node>.oc-node::after {
+    background-color: rgba(33, 90, 136, 0.8) !important;
+}
+
+.orgchart.myChart .oc-group:not(:last-child)::before {
+    border-color: rgba(33, 90, 136, 0.8)!important;
+}
+
+.orgchart.myChart .oc-group>orgchart-node::before {
+    border-color: rgba(33, 90, 136, 0.8)!important;
+}
+
+.orgchart.myChart orgchart-node:not(:last-child)::after {
+    border-color: rgba(33, 90, 136, 0.8)!important;
+}
+
+.oc-node {
+    /* min-width: 150px !important; */
+    width: 150px !important;
+}
+
+#oc-1 .fullname {
+    color: blue;
+}
+
+.orgchart-container {
+    height: 100% !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    border: 0 solid !important;
+}
+
+/* .oc-node.oc-is-selected,
+.oc-node:hover {
+    background-color: rgb(3, 119, 119)!important;
+    color: #fff!important;
+} */
+
+.oc-icon {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+}
+
+.oc-node .oc-toggle-btn {
+    color: #fff;
+    background-color: rgba(68, 157, 68, .6);
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+}
+
+.swal2-popup {
+    font-size: 0.5rem !important;
+  }
+/* .oc-icon {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+} */
+
+.oc-icon-minus::before {
+    content: "\2212" !important;
+}
+
+.oc-icon-plus::before {
+    content: "\002B" !important;
+}

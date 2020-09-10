@@ -1,0 +1,23 @@
+<div class="calander-container overflow-h clear" #calender [style.top]='top' [style.left]='left'>
+    <div class="clear textcenter inline">
+        <div><span class="left" (click)="changeMonth(month-1)"></span></div>
+        <div>
+            <div>{{year}}</div>
+            <div (click)="showMonth()">{{monthName}}</div>
+        </div>
+        <div><span class="right" (click)="changeMonth(month+1)"></span></div>
+    </div>
+    <div class="days overflow-h clear textcenter">
+        <div class="day" [class.active]='weekname == 0'>Su</div>
+        <div class="day" [class.active]='weekname == 1'>Mo</div>
+        <div class="day" [class.active]='weekname == 2'>Tu</div>
+        <div class="day" [class.active]='weekname == 3'>We</div>
+        <div class="day" [class.active]='weekname == 4'>Th</div>
+        <div class="day" [class.active]='weekname == 5'>Fr</div>
+        <div class="day" [class.active]='weekname == 6'>Sa</div>
+    </div>
+    <div class="dates textcenter">
+        <div class="day blur" *ngFor='let d of prevMonth'>{{d}}</div>
+        <div class="day" (click)="selectDate(d)" [class.active]="today == d" *ngFor='let d of daysInMonth'>{{d}}</div>
+    </div>
+</div>

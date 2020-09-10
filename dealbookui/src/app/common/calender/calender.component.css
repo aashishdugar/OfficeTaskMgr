@@ -1,0 +1,81 @@
+.textcenter {
+    text-align: center;
+}
+
+.clear {
+    clear: both;
+}
+
+.overflow-h {
+    overflow: hidden;
+}
+
+.calander-container {
+    max-width: 220px;
+    width: 150px;
+    border: 1px solid #ccc;
+    position: absolute;
+    user-select: none;
+    top: 80px;
+    background: #fff;
+}
+
+.inline {
+    overflow: hidden;
+}
+
+.inline>div {
+    width: 33%;
+    float: left;
+    height: 36px;
+    cursor: pointer;
+    line-height: 17px;
+    font-size: 0.8rem;
+}
+
+.inline>div:first-child,
+.inline>div:last-child {
+    line-height: 36px;
+}
+
+.days {
+    background: #ececec;
+    cursor: pointer;
+}
+
+span {
+    width: 1px;
+    height: 1px;
+    display: inline-block;
+    border-top: 10px solid #0000;
+    border-bottom: 10px solid #f000;
+    vertical-align: middle;
+}
+
+.left {
+    border-right: 13px solid #2fa000;
+}
+
+.right {
+    border-left: 13px solid #2fa000;
+}
+
+.day:hover,
+.day.active {
+    background: #2fa000;
+    color: #fff;
+}
+
+.day {
+    width: calc(100%/7);
+    padding: 2px 0px;
+    float: left;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.blur {
+    color: #8c8c8c;
+}

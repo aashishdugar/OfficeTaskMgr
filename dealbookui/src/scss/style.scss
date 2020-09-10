@@ -1,0 +1,218 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+
+
+//toster css
+@import '~ngx-toastr/toastr';
+
+@import '~ngx-org-chart/_theming.scss';
+
+.btn-login{
+
+    background-color: #04c6c6;
+    border: #04c6c6;
+    color: #fff;
+}
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    list-style: none;
+   background-color: transparent;
+    border-radius: 0;
+    float: right;
+ 
+}
+// .head{
+
+//     margin-left: -2em;
+// margin-right: -2em;
+// }
+
+// .container-fluid{
+//     padding-left: 0;
+// position: relative;
+// padding-right: 0px;
+// }
+
+.cdk-virtual-scroll-viewport {
+    scrollbar-width: thin;
+  }
+.head {
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #fff;
+    /* color: #00c6c6; */
+    font-size: 14px;
+    display: flex;
+    background: #0ac8c8;
+    ;
+}
+.main .container-fluid {
+    padding: 0 6px;
+}
+.columns {
+    /* width: calc((100% - 45px)/7); */
+    word-break: break-word;
+    padding: 0px 25px 0px 5px;
+    display: inline-block;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    vertical-align: top;
+    flex: 1;
+    min-width: 80px;
+    max-width: 100%;
+}
+
+.columns span {
+    display: inline-block;
+    width: 100%;
+    padding: 5px 0;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
+.head .columns:hover,
+.head .columns.active {
+    background: #0ac8c8;
+}
+
+.resize-col {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    width: 10px;
+    height: 100%;
+    top: 0;
+    border-right: 3px solid #09c8c8;
+    display: none;
+}
+
+.head .columns:hover .resize-col {
+    display: block;
+    cursor: col-resize;
+}
+
+.column-last {
+    display: inline-block;
+    padding: 5px 0;
+    text-align: center;
+    min-width: 60px;
+    margin-left: 5px;
+}
+.column-last i {
+    cursor: pointer;
+    flex: 1
+}
+
+.sort-icon {
+    position: absolute;
+    right: 16px;
+    top: 5px;
+}
+
+
+// Contact page css.add
+h4, .h4 {
+    font-size: 1.2rem;
+    margin-left: 0.5em;
+}
+
+.card-header {
+    //padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #00c5c5;
+    border-bottom: 1px solid #c8ced3;
+    color: #fff;
+}
+
+textarea.form-control {
+    height: 3em;
+}
+
+.add-activity {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 15px;
+    top: 3px;
+    z-index: 9999;
+}
+
+
+// .orgchart.myChart {
+//     background-image:
+//   }
+  
+  .orgchart.myChart .oc-node .position {
+    box-sizing: border-box;
+    background-color:  #abb2b9    ;
+    color: #fff;
+    width: 130px;
+    height: 30px;
+    font-weight: 600;
+    border:1px solid #808b96;
+    //padding: 2px;
+  }
+  .oc-node .oc-toggle-btn {
+    color: #fff;
+    background-color: #d5d8dc;
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+  }
+  .orgchart.myChart .oc-node .fullname {
+    box-sizing: border-box;
+    color: #2e4053;
+    background-color:#fff;
+    width: 130px;
+    height: 45px;
+    padding: 2px;
+    border: 1px solid  #808b96 ;
+    font-size: 12px;
+  }
+  
+  .orgchart.myChart > orgchart-node > .oc-node::after {
+    background-color:#4b8c91 !important;
+  }
+  
+  .orgchart.myChart .oc-group:not(:last-child)::before {
+    border-color: #4b8c91!important;
+  }
+  
+  .orgchart.myChart .oc-group > orgchart-node::before {
+    border-color: #4b8c91!important;
+  }
+  
+  .orgchart.myChart orgchart-node:not(:last-child)::after {
+    border-color: #4b8c91!important;
+  }
+  
+  #oc-1 .fullname {
+    color: #0ac8c8;
+  }
+
+  .orgchart{
+    box-sizing: border-box;
+    display: inline-block;
+    background-image: linear-gradient(90deg,rgba(0,0,0,0) 10%,rgba(0,0,0,0) 10%),linear-gradient(rgba(0,0,0,0) 10%,rgba(0,0,0,0) 10%);
+    background-size: 10px 10px;
+    border: 1px dashed transparent;
+    padding: 20px;
+}
+
+.btn:focus, .btn.focus {
+  outline: 0;
+ 
+}

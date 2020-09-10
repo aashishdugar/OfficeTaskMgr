@@ -1,0 +1,92 @@
+// .mainDiv {
+//     text-align: center;
+// }
+
+// .mainSubDiv {
+//     display: inline-flex;
+//     text-align: center;
+//     text-align: -moz-center;
+//     scrollbar-width: thin;
+// }
+
+// .contentDiv {
+//     width: 12em;
+//     margin: 0.5em;
+//     border: 1px solid #3f74a3;
+// }
+
+// .content-ul {
+//     list-style: none;
+//     display: inline-flex;
+//     margin: 0.5em;
+//     padding-left: 0;
+// }
+
+
+// .subcontent-ul {
+//     list-style: none;
+//     display: inline-flex;
+//     padding-left: 0;
+// }
+
+
+// .modal-backdrop
+// {
+//     opacity:0.5 !important;
+// }
+
+// .card-header {
+//     margin-bottom: 0;
+//     background-color: #4b8c91;
+//     border-bottom: 1px solid #c8ced3;
+//     color: #fff;
+// }
+
+
+// .orgchart.myChart {
+//     background-image: linear-gradient(90deg, rgba(33, 90, 136, 0.15) 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(rgba(33, 90, 136, 0.15) 10%, rgba(0, 0, 0, 0) 10%)!important;
+//   }
+  
+.orgchart.myChart .oc-node .position {
+  box-sizing: border-box;
+  // background-color: #abb2b9 !important;
+  color: #000;
+  width: 134px;
+  height: 39px;
+  padding: 2px;
+  border-top: 1px solid #566573 !important;
+border-right: 1px solid #566573 !important;
+border-left: 1px solid #566573 !important;
+font-size: 0.7rem !important;
+}
+  
+.orgchart.myChart .oc-node .fullname {
+  box-sizing: border-box;
+  color: #000 !important;
+  background-color: #fff;
+  width: 134px;
+  height: 65px;
+  padding: 2px;
+  border: 1px solid #566573 !important;
+  font-size: 0.7rem !important;
+}
+  
+  .orgchart.myChart > orgchart-node > .oc-node::after {
+    background-color: rgba(33, 90, 136, 0.8) !important;
+  }
+  
+  .orgchart.myChart .oc-group:not(:last-child)::before {
+    border-color: rgba(33, 90, 136, 0.8)!important;
+  }
+  
+  .orgchart.myChart .oc-group > orgchart-node::before {
+    border-color: rgba(33, 90, 136, 0.8)!important;
+  }
+  
+  .orgchart.myChart orgchart-node:not(:last-child)::after {
+    border-color: rgba(33, 90, 136, 0.8)!important;
+  }
+  
+  #oc-1 .fullname {
+    color: blue;
+  }

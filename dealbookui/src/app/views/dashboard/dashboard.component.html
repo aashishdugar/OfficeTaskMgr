@@ -1,0 +1,281 @@
+
+<div class="container-fluid" [ngStyle]="{'height': '100%'}">
+<div class="row" >
+  <div class="col-sm-3 col-lg-3">
+    
+      <div class="col-md-12" style="line-height: 3em;">
+          <span class="top-menu-heading mr-3" (click)="createWidget($event)" style="cursor: pointer;"><i class="fa fa-plus" aria-hidden="true"></i> Add Widget</span>
+      </div>
+    </div>
+      <div class="col-sm-3 col-lg-3">
+      
+      </div>
+      <div class="col-sm-3 col-lg-3">
+
+         
+       
+        
+      </div>
+      <div class="col-sm-3 col-lg-3">
+         
+      </div>
+</div>
+
+
+<div class="dashboard-container">
+  <div class="col-md-12 col-lg-12 col-xl-12 mt-3" [class.mb-5]="last" *ngFor="let item of utils.widgets; let last = last;">
+      <app-widgets [updateWidget]="updateWidget" [data]="item"></app-widgets>
+  </div>
+</div>
+
+<div id="createwidget" *ngIf="openWindow" (click)="closeWindow($event)">
+    <div id="createwidget_container" (click)="$event.stopPropagation()">
+        <div>
+            <div style="background: rgb(206, 202, 202); color: #fff;">
+                <span class="title">Add New Widget</span>
+                <span (click)="closeWindow($event)" class="close-btn pull-right m-2"><i class="fa fa-window-close" aria-hidden="true"></i></span>
+            </div>
+            <div class="container">
+                <div class="row custom-wrapper">
+                    <div class="col-md-12">
+                        
+                        <!-- Form starts -->
+                        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+                            <div class="group-gap">
+                                <div class="d-block">
+
+                                    <div class="mb-3 form-group">
+                                        <label>Widget Name*</label>
+                                        <input name="widgetname" (change)="widgeterror=''" style="font-size: 13px;" type="text " class="form-control" placeholder="Widget Name " formControlName="widgetName" required>
+                                        <label style="color: red;"  *ngIf="widgeterror != null && widgeterror != '' "> {{widgeterror}}</label>
+      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="group-gap ">
+                                <div class="d-block">
+                                    <div class="mb-3 form-group">
+                                        <label>Filter criteria*</label>
+                                        <select style="font-size: 13px;" class="custom-select" [(ngModel)]="widgetcriteria" (change)="changeCriteria($event.target.value) " formControlName="widgetCriteria">
+                                          <option disabled hidden value="null">Choose filter criteria</option>
+                                            <option *ngFor="let criteria of filterCriteria " [value]="criteria.id " >{{criteria.name}}</option>
+                                        </select>
+                                        <label style="color: red;"  *ngIf="criteriaerror != null && criteriaerror != '' "> {{criteriaerror}}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="group-gap ">
+                                <div class="d-block">
+
+                                    <div class="mb-3 form-group">
+                                        <label>Filter criteria*</label>
+                                        <select class="custom-select " (change)="changeCriteria($event.target.value) " formControlName="widgetCriteria">
+                                            <option disabled hidden value="null">Choose filter criteria</option>
+                                            <option *ngFor="let criteria of criteriaList " [value]="criteria ">{{criteria}}</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div> -->
+                            <div class="group-gap " *ngIf="(null != FIlterBy || FilterBy != undefined) && FIlterBy.length > 0">
+                                <div class="d-block">
+
+                                    <div class="mb-3 form-group">
+                                        <label>Filter By*</label>
+                                        <select style="font-size: 13px;"  class="custom-select" [(ngModel)]="filterbymodel" multiple (change)="changeFilter($event.target.value)" formControlName="widgetFIlterBy">
+                                            <ng-container *ngFor="let item of FIlterBy">
+                                                <option  [value]="item.id">{{item.name}}</option>
+                                            </ng-container>
+                                        </select>
+                                        <label style="color: red;"  *ngIf="filtererror != null && filtererror != '' "> {{filtererror}}</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+  
+                            <div class="group-gap " *ngIf="null != activityTypeList && activityTypeList.length > 0">
+                                <div class="d-block">
+                                    <div class="mb-3 form-group">
+                                        <label>Activity Type </label>
+                                        <select style="font-size: 13px;"  class="custom-select" [(ngModel)]="activityType" multiple  formControlName="widgetActivityTypeOptions">
+                                            <ng-container *ngFor="let item of activityTypeList">
+                                                <option  [value]="item.id">{{item.name}}</option>
+                                            </ng-container>
+                                        </select>
+                                        <label style="color: red;"  *ngIf="activitytypeerror != null && activitytypeerror != '' "> {{activitytypeerror}}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="group-gap " *ngIf="null != followupDateList && followupDateList.length > 0">
+                                <div class="d-block">
+    
+                                    <div class="mb-3 form-group">
+                                        <label>FollowUp Date</label>
+                                        <select style="font-size: 13px;"  class="custom-select" [(ngModel)]="followUpDate" formControlName="widgetFollowUpOptions">
+                                             <ng-container *ngFor="let item of followupDateList">
+                                                <option  [value]="item.name" >{{item.name}}</option>
+                                                <!-- *ngIf="item.isFilter" -->
+                                            </ng-container>
+                                        </select>
+                                        <label style="color: red;"  *ngIf="followuperror != null && followuperror != '' "> {{followuperror}}</label>
+                                        
+                                    </div>
+    
+                                </div>
+                            </div>
+
+                            <div class="group-gap " *ngIf="null != updatedByList && updatedByList.length > 0">
+                                <div class="d-block">
+    
+                                    <div class="mb-3 form-group">
+                                        <label>Updated By</label>
+                                        <select style="font-size: 13px;"  class="custom-select" multiple  [(ngModel)]="updatedby" formControlName="widgetUpdatedbyOptions">
+                                             <ng-container *ngFor="let item of updatedByList">
+                                                <option  [value]="item.id">{{item.name}}</option>
+                                                <!-- *ngIf="item.isFilter" -->
+                                            </ng-container>
+                                        </select>
+                                        <label style="color: red;"  *ngIf="updatedbyerror != null && updatedbyerror != '' "> {{updatedbyerror}}</label>
+                                        
+                                    </div>
+    
+                                </div>
+                            </div>
+
+                          <div class="group-gap " *ngIf="null != companyList && companyList.length > 0">
+                            <div class="d-block">
+
+                                <div class="mb-3 form-group">
+                                    <label>Company</label>
+                                    <select style="font-size: 13px;" multiple class="custom-select" [(ngModel)]="company" formControlName="widgetCompanyOptions">
+                                        <ng-container *ngFor="let item of companyList">
+                                            <option  [value]="item.id">{{item.name}}</option>
+                                            <!-- *ngIf="item.isFilter" -->
+                                        </ng-container>
+                                    </select>
+                                    <label style="color: red;"  *ngIf="companyerror != null && companyerror != '' "> {{companyerror}}</label>
+                                        
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="group-gap " *ngIf="null != contactownerList && contactownerList.length > 0">
+                            <div class="d-block">
+
+                                <div class="mb-3 form-group">
+                                    <label>Contact Owner</label>
+                                    <select style="font-size: 13px;" multiple class="custom-select" [(ngModel)]="contactOwner" formControlName="widgetContactOwnerOptions">
+                                        <ng-container *ngFor="let item of contactownerList">
+                                            <option  [value]="item.id">{{item.name}}</option>
+                                            <!-- *ngIf="item.isFilter" -->
+                                        </ng-container>
+                                    </select>
+                                    <label style="color: red;"  *ngIf="contactownererror != null && contactownererror != '' "> {{contactownererror}}</label>
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="group-gap " *ngIf="null != reporttoList && reporttoList.length > 0">
+                            <div class="d-block">
+
+                                <div class="mb-3 form-group">
+                                    <label>Report To</label>
+                                    <select style="font-size: 13px;" multiple class="custom-select" [(ngModel)]="reportsto" formControlName="widgetReportsToOptions">
+                                        <ng-container *ngFor="let item of reporttoList">
+                                            <option  [value]="item.id">{{item.name}}</option>
+                                            <!-- *ngIf="item.isFilter" -->
+                                        </ng-container>
+                                    </select>
+                                    <label style="color: red;"  *ngIf="reporttoerror != null && reporttoerror != '' "> {{reporttoerror}}</label>
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+
+                          <div class="group-gap " *ngIf="null != designationList && designationList.length > 0">
+                              <div class="d-block">
+  
+                                  <div class="mb-3 form-group">
+                                      <label>Designation</label>
+                                      <select style="font-size: 13px;" multiple class="custom-select" [(ngModel)]="designation" formControlName="widgetDesignationOptions">
+                                          <ng-container *ngFor="let item of designationList">
+                                              <option  [value]="item">{{item}}</option>
+                                              <!-- *ngIf="item.isFilter" -->
+                                          </ng-container>
+                                      </select>
+                                  </div>
+  
+                              </div>
+                          </div>
+                          <div class="group-gap " *ngIf="null != locationList && locationList.length > 0">
+                            <div class="d-block">
+
+                                <div class="mb-3 form-group">
+                                    <label>Location</label>
+                                    <select style="font-size: 13px;" multiple class="custom-select" [(ngModel)]="location" formControlName="widgetLocationOptions">
+                                        <ng-container *ngFor="let item of locationList">
+                                            <option  [value]="item">{{item}}</option>
+                                            <!-- *ngIf="item.isFilter" -->
+                                        </ng-container>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                          <div class="group-gap " *ngIf="null != lastActivateDateList && lastActivateDateList.length > 0">
+                              <div class="d-block">
+  
+                                  <div class="mb-3 form-group">
+                                      <label>Last Active Date</label>
+                                      <select style="font-size: 13px;" class="custom-select" [(ngModel)]="lastActiveDate" formControlName="widgetLastActiveDateOptions">
+                                          <ng-container *ngFor="let item of lastActivateDateList">
+                                              <option  [value]="item.name" >{{item.name}}</option>
+                                              <!-- *ngIf="item.isFilter" -->
+                                          </ng-container>
+                                      </select>
+                                      <label style="color: red;"  *ngIf="lastactivitydateerror != null && lastactivitydateerror != '' "> {{lastactivitydateerror}}</label>
+                                       
+                                  </div>
+  
+                              </div>
+                          </div>
+                          <div class="group-gap " *ngIf="null != creationDateList && creationDateList.length > 0">
+                              <div class="d-block">
+  
+                                  <div class="mb-3 form-group">
+                                      <label>Creation Date</label>
+                                      <select style="font-size: 13px;" class="custom-select" [(ngModel)]="creationDate" formControlName="widgetCreationDateOptions">
+                                          <ng-container *ngFor="let item of creationDateList">
+                                              <option  [value]="item.name">{{item.name}}</option>
+                                              <!-- *ngIf="item.isFilter" -->
+                                          </ng-container>
+                                          
+                                      </select>
+                                      <label style="color: red;"  *ngIf="createdonerror != null && createdonerror != '' "> {{createdonerror}}</label>
+                                         
+                                  </div>
+                                </div>
+                          </div>
+                          
+
+                            <!-- Submit Button -->
+                            <button type="submit " class="btn theambg pull-right " style="color: #fff; ">Submit</button>
+                        </form>
+                        <!-- Form ends -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

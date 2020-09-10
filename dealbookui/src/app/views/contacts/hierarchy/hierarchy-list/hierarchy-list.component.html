@@ -1,0 +1,20 @@
+<div class="oc-h-bar oc-border" *ngIf="hasManager"></div>
+<div (click)="clicked(employee)" class="oc-box oc-border oc-background" [class.active]="employee.id == active" [class.hasActivity]="employee.activities.length">
+    <div class="oc-img" *ngIf="employee?.img"><img src="{{employee?.img}}" /></div>
+    <div class="oc-content">
+        <div class="oc-name">{{employee?.name}}</div>
+        <div class="oc-designation">{{employee?.designation}}</div>
+        <div class="col-md-12">
+            <hr class="m-0 box">
+            <span class="tag tag-primary"><i class="fa fa-meetup" aria-hidden="true"></i>
+                {{numOfActTypes.Meeting}}</span>
+            <span class="tag tag-success"><i class="fa fa-phone custom"></i> {{numOfActTypes.Call}}</span>
+            <span class="tag tag-danger"><i class="fa fa-envelope" aria-hidden="true"></i>
+                {{numOfActTypes.Email}}</span>
+        </div>
+        <i (click)="addContact($event)" class="fa fa-plus-circle addcontact" aria-hidden="true"></i>
+    </div>
+</div>
+<div class="showHide"><i (click)="showHide($event)" *ngIf="!employee.subordinates || !employee.subordinates.length || !isShow" class="fa fa-chevron-circle-up" aria-hidden="true"></i><i (click)="showHide($event)" *ngIf="employee.subordinates && employee.subordinates.length && isShow"
+        class="fa fa-chevron-circle-down" aria-hidden="true"></i></div>
+<div class="oc-h-bar oc-border" *ngIf="employee.subordinates && employee.subordinates.length && isShow"></div>

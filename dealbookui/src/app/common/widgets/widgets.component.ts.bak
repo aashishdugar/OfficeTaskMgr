@@ -1,0 +1,105 @@
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import { ContactsService } from 'src/app/services/contacts.service';
+import { EventEmitterService } from 'src/app/services/eventEmitter.service';
+import { AppComponent } from 'src/app/app.component';
+
+@Component({
+  selector: 'app-widgets',
+  templateUrl: './widgets.component.html',
+  styleUrls: ['./widgets.component.css'],
+  
+})
+
+export class WidgetsComponent implements OnInit {
+
+  
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  ACTIVITY_TABLE_COLUMNS = [
+    {column:"Contact Name", title:"contactName", display: true},
+    {column:"Activity Type", title:"activityType", display: true},
+    {column:"Comment", title:"subject", display: true},
+    {column:"Update By", title:"updateBy", display: true},
+    {column:"FollowUp Date", title:"fallowUp", display: true},
+    {column:"Creation Date", title:"date", display: true},
+  ]
+
+  CONTACTS_TABLE_COLUMNS = [
+    {column:"Name", title:"name", display: true},
+        {column:"Email", title:"email", display: true},
+        {column:"Phone", title:"phone", display: true},
+        // {column:"Contact Number", title:"phone", display: true},
+        {column:"Company", title:"company", display: true},
+        {column:"Designation", title:"designation", display: true},
+        {column:"Location", title:"location", display: false},
+        {column:"Report To", title:"reportto", display: true},
+        {column:"Contact Owner", title:"contactowner", display: true},
+        {column:"Last Activity Date", title:"lastactivitydate", display: true},
+        {column:"Creation Date", title:"creationdate", display: false}
+  ]
+
+  date = ["creationdate", "lastactivitydate", "date", "fallowUp"];
+
+  displayedColumns: string[];
+  dataSource = new MatTableDataSource([]);
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  title="";
+  id;
+  columnsData = null;
+  @Input("data") data;
+  @Input("updateWidget") updateWidget;
+  @Input("type") set type(val){
+    this.title = val.widgetName;
+    this.data = val.data;
+    this.id = val.id;
+    if(val.widgetCriteria.toLowerCase() == "activities") {
+      this.displayedColumns = this.ACTIVITY_TABLE_COLUMNS.map(column => column.title);
+      this.columnsData = this.ACTIVITY_TABLE_COLUMNS;
+    }else {
+      this.displayedColumns = this.CONTACTS_TABLE_COLUMNS.map(column => column.title);
+      this.columnsData = this.CONTACTS_TABLE_COLUMNS;
+    }
+  };
+  constructor(private contactService: ContactsService, private emService: EventEmitterService) {
+   }
+
+  ngOnInit() {
+    // this.contactService.activites.subscribe(activities=>{
+    //   this.dataSource = new MatTableDataSource(activities);
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
+    // })
+    if(this.type == "activites") {
+    }else {
+    }
+    // this.contactService[this.title].subscribe(data=>{
+        this.dataSource = new MatTableDataSource(this.data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+    // });
+  }
+  renderDate(date, key) {
+    if(key == "fallowUp" && date) {
+      date = date.fallowUpDate;
+    }
+    return date ? new Date(date).toDateString() : "";
+  }
+  renderValue(data) {
+    if(data && typeof data === 'object') {
+      return data.name;
+    }
+    return data;
+  }
+  editWidget(id) {
+ 
+  }
+  deleteWidget(id, title) {
+    if(confirm("Are you sure want to delete '"+title+"' Widget")){
+      this.contactService.deleteWidgets(id).subscribe(res=> {
+        this.emService.updateWidgits();
+      })
+    }
+  }
+}
